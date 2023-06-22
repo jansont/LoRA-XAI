@@ -1,0 +1,57 @@
+project:
+  name: lora-xai
+  syncFilters:
+    - exclude:
+        - .idea/*
+        - .git/*
+        - '*/__pycache__/*'
+containers:
+  - projectDir: /workspace/project
+    file: Dockerfile.spotty
+    name: lora-xai
+    env:
+      PYTHONPATH: /workspace/project
+    ports:
+      # TensorBoard
+      - containerPort: 6006
+        hostPort: 6006
+      # Jupyter
+      - containerPort: 8888
+        hostPort: 8888
+    volumeMounts:
+      - name: workspace
+        mountPath: /workspace
+    runtimeParameters: [ '--shm-size', '128G']
+instances:
+  - name: local1
+    provider: local
+    parameters:
+      containerName: dp-vaca 
+      volumes:
+        - name: data
+          parameters: 
+            path: Data/
+  - name: aws1
+    provider: aws
+    parameters:
+      region: eu-west-3
+      containerName: dp-vaca
+      spotInstance: true
+      instanceType: c5.12xlarge
+      dockerDataRoot: /docker
+      volumes:
+        - name: workspace
+          parameters:
+            size: 100
+            deletionPolicy: "Delete"
+        - name: docker
+          parameters:
+            size: 100
+            mountDir: /docker
+            deletionPolicy: "Delete"
+scripts:
+  tensorboard: |
+    tensorboard --logdir /workspace/project/lightning_logs
+  jupyter: |
+    jupyter notebook --allow-root --ip 0.0.0.0 --notebook-dir=/workspace/project
+      
