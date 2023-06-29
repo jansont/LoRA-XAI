@@ -1,0 +1,21 @@
+name: llm-xai
+
+resources:
+  cloud: aws
+  region: eu-west-1
+  accelerators: A10G:1
+  use_spot: true
+  # spot_recovery: 'FAILOVER'
+
+
+
+# Working directory (optional) containing the project codebase.
+# Its contents are synced to ~/sky_workdir/ on the cluster.
+workdir: .
+
+setup:
+  bash setup.sh
+run:
+  jupyter notebook --port 8888
+  # python main.py
+

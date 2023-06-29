@@ -1,0 +1,22 @@
+skypilot
+numpy>=1.20
+matplotlib
+accelerate==0.20.3
+appdirs==1.4.4     # A small Python module for determining appropriate platform-specific dirs, e.g. a "user data dir".
+bitsandbytes==0.37.2 #The bitsandbytes is a lightweight wrapper around CUDA custom functions, in particular 8-bit optimizer
+datasets==2.10.1       #huggingface datasets
+fire==0.5.0
+#PEFT: State-of-the-art Parameter-Efficient Fine-Tuning (PEFT) methods
+# including LoRA, prefix tuning, P Tuning etc.
+git+https://github.com/huggingface/peft.git
+git+https://github.com/huggingface/transformers.git
+torch==2.0.0
+sentencepiece==0.1.97
+tensorboardX==2.6
+gradio==3.23.0
+gdown
+numpy
+pandas
+transformers
+ipykernel
+jupyter
